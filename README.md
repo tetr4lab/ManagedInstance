@@ -73,7 +73,13 @@ public class FlyText : MonoBehaviour {
 他にも、モーダルダイアログのように複数重ねる可能性があって、最前だけを特別扱いしたいような場合もあるでしょう。
 
 uGUIの例ばかりですが、私の場合は、プレハブから動的に生成して数や挙動を管理したいものが多くあります。
-それぞれに同じようなことを書くのが面倒なので、共通化できないか考えた末に、このようなアプローチになりました。
+それぞれに同じようなことを書くのが面倒なので、共通化できないか考えた末に、以下のようなアプローチになりました。
+
+https://github.com/tetr4lab/ManagedInstance/blob/d4658c95b18705b801e05807781e7424933a60b5/Assets/Scripts/ManagedInstance.cs#L1-L154
+
+このクラスを使うフライテキストは、以下のようになります。
+
+https://github.com/tetr4lab/ManagedInstance/blob/d4658c95b18705b801e05807781e7424933a60b5/Assets/Scripts/FlyText.cs#L1-L56
 
 フライテキストの基本的な使い方は変わっていません。
 
