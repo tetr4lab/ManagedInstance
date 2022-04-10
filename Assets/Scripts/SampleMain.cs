@@ -6,21 +6,23 @@ using Tetr4lab;
 
 public class SampleMain : MonoBehaviour {
 
+    private bool destroyed = false;
+
     async void Start () {
         // ¶¬1
-        await FlyText.CreateAsync (gameObject, "Ready?");
+        if (!destroyed) await FlyText.CreateAsync (gameObject, "Ready?");
         // Á–Å‚ğ‘Ò‚Â
-        await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
+        if (!destroyed) await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
         // ¶¬2
-        await FlyText.CreateAsync (gameObject, "Start!");
+        if (!destroyed) await FlyText.CreateAsync (gameObject, "Start!");
         // Á–Å‚ğ‘Ò‚Â
-        await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
+        if (!destroyed) await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
         // 3•b‘Ò‚Â
-        await Task.Delay (3000);
+        if (!destroyed) await Task.Delay (3000);
         // ¶¬3
-        await FlyText.CreateAsync (gameObject, "End");
+        if (!destroyed) await FlyText.CreateAsync (gameObject, "End");
         // Á–Å‚ğ‘Ò‚Â
-        await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
+        if (!destroyed) await TaskEx.DelayWhile (() => FlyText.managedInstance.OnMode);
         // I—¹
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -28,5 +30,7 @@ public class SampleMain : MonoBehaviour {
         UnityEngine.Application.Quit();
 #endif
     }
+
+    private void OnDestroy () => destroyed = true;
 
 }

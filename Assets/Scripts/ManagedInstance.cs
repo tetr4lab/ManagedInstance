@@ -30,12 +30,23 @@ namespace Tetr4lab {
 	/// </summary>
 	public class ManagedInstance<T> : IDisposable where T : MonoBehaviour {
 
-		public int Count => Instances.Count; // インスタンス数
-		public int MaxInstances { get; protected set; } // 最大インスタンス数 (0で無制限)
-		public bool AutoDelete { get; protected set; } // 上限数を超えたら最古を破棄する
-		public List<T> Instances { get; protected set; } // インスタンス一覧
-		public T LastInstance => (Instances == null || Count <= 0) ? null : Instances [Count - 1]; // 最新のインスタンス
-		public bool OnMode { // ひとつ以上生成されている
+		/// <summary>インスタンス数</summary>
+		public int Count => Instances.Count;
+		
+		/// <summary>最大インスタンス数 (0で無制限)</summary>
+		public int MaxInstances { get; protected set; }
+		
+		/// <summary>上限数を超えたら最古を破棄する</summary>
+		public bool AutoDelete { get; protected set; }
+		
+		/// <summary>インスタンス一覧</summary>
+		public List<T> Instances { get; protected set; }
+		
+		/// <summary>最新のインスタンス</summary>
+		public T LastInstance => (Instances == null || Count <= 0) ? null : Instances [Count - 1];
+		
+		/// <summary>ひとつ以上生成されている</summary>
+		public bool OnMode {
 			get { return (Instances != null && Count > 0); }
 			set {
 				if (!value) { // 全インスタンス破棄
@@ -45,7 +56,9 @@ namespace Tetr4lab {
 				}
 			}
 		}
-		public async Task<GameObject> GetPrefabAsync () { // デフォルトプレハブ
+
+		/// <summary>デフォルトプレハブ</summary>
+		public async Task<GameObject> GetPrefabAsync () {
 			if (!prefab) {
 				prefab = await Addressables.LoadAssetAsync<GameObject> ($"Prefabs/{typeof (T).Name}.prefab").Task;
 			}
